@@ -36,24 +36,22 @@ jobs:
           gradle-version: '8.7'
 
       - name: Check project files
-        working-directory: ISMAR
         run: |
+          ls -la
           test -f settings.gradle
           test -f app/build.gradle
           test -f app/src/main/AndroidManifest.xml
 
       - name: Run unit tests
-        working-directory: ISMAR
         run: gradle testDebugUnitTest --stacktrace
 
       - name: Build debug APK
-        working-directory: ISMAR
         run: gradle assembleDebug --stacktrace
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: ISMAR-debug-apk
-          path: ISMAR/app/build/outputs/apk/debug/*.apk
+          path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
           retention-days: 14
